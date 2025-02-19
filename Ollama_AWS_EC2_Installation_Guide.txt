@@ -1,0 +1,124 @@
+
+# Ollama Installation Guide for AWS EC2 Instance
+
+## 1. Install Ollama on EC2
+Run the installation script:
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+If you prefer manual installation, follow these steps:
+- Download and extract the package:
+  ```bash
+  curl -L https://ollama.com/download/ollama-linux-amd64.tgz -o ollama-linux-amd64.tgz
+  sudo tar -C /usr -xzf ollama-linux-amd64.tgz
+  ```
+
+## 2. Start Ollama
+After installation, start Ollama:
+```bash
+ollama serve
+```
+In a separate terminal, verify Ollama is running:
+```bash
+ollama -v
+```
+
+## 3. Optional: Adding Ollama as a Startup Service
+To ensure Ollama starts automatically when your EC2 instance boots, follow these steps:
+
+1. Create a user and group for Ollama:
+   ```bash
+   sudo useradd -r -s /bin/false -U -m -d /usr/share/ollama ollama
+   sudo usermod -a -G ollama $(whoami)
+   ```
+
+2. Create a systemd service file:
+   ```bash
+   sudo nano /etc/systemd/system/ollama.service
+   ```
+
+Add the following content:
+```ini
+[Unit]
+Description=Ollama Service
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/ollama serve
+User=ollama
+Group=ollama
+Restart=always
+RestartSec=3
+Environment="PATH=$PATH"
+
+[Install]
+WantedBy=default.target
+```
+
+3. Enable and start the service:
+   ```bash
+   sudo systemctl daemon-reload
+   sudo systemctl enable ollama
+   sudo systemctl start ollama
+   sudo systemctl status ollama
+   ```
+
+## 4. Optional: GPU Installation
+If using **AMD GPU**:
+- Install ROCm package:
+  ```bash
+  curl -L https://ollama.com/download/ollama-linux-amd64-rocm.tgz -o ollama-linux-amd64-rocm.tgz
+  sudo tar -C /usr -xzf ollama-linux-amd64-rocm.tgz
+  ```
+
+If using **CUDA with NVIDIA GPU**:
+- Install CUDA drivers from [NVIDIA's website](https://www.nvidia.com/en-us/drivers/unix/).
+
+- Verify GPU installation:
+  ```bash
+  nvidia-smi
+  ```
+
+## 5. Updating Ollama
+To update Ollama, re-run the installation script:
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+## 6. Customizing Ollama Settings
+To customize environment variables or modify the service file:
+```bash
+sudo systemctl edit ollama
+```
+
+For debugging, create an override file:
+```bash
+sudo nano /etc/systemd/system/ollama.service.d/override.conf
+```
+
+Add:
+```ini
+[Service]
+Environment="OLLAMA_DEBUG=1"
+```
+
+## 7. Uninstalling Ollama
+- Stop and disable the service:
+  ```bash
+  sudo systemctl stop ollama
+  sudo systemctl disable ollama
+  sudo rm /etc/systemd/system/ollama.service
+  ```
+
+- Remove the binary:
+  ```bash
+  sudo rm $(which ollama)
+  ```
+
+- Delete models and remove user/group:
+  ```bash
+  sudo rm -r /usr/share/ollama
+  sudo userdel ollama
+  sudo groupdel ollama
+  ```
