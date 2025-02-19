@@ -1,5 +1,6 @@
 import gradio as gr
 
+import os
 from src.Exceptions import CustomException
 from src.Logs import logging
 from src.components.pdf_utils import PdfExtraction
