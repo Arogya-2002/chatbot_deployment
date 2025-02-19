@@ -1,0 +1,6 @@
+# bs4
+openai
+PyMuPDF
+# requests
+# python-dotenv
+gradio
