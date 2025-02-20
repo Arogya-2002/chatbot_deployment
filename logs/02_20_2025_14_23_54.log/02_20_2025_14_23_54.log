@@ -1,0 +1,4 @@
+[ 2025-02-20 14:25:05,062 ] 25 root - INFO - The chat has started
+[ 2025-02-20 14:25:05,062 ] 11 root - INFO - Pulling the Ollama model
+[ 2025-02-20 14:25:06,443 ] 16 root - INFO - Model pulled successfully!
+[ 2025-02-20 14:25:06,443 ] 31 root - INFO - PdfExtraction object created successfully

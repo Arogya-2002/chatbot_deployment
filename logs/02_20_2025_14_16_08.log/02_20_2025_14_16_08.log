@@ -1,0 +1,6 @@
+[ 2025-02-20 14:16:41,993 ] 25 root - INFO - The chat has started
+[ 2025-02-20 14:16:41,993 ] 11 root - INFO - Pulling the Ollama model
+[ 2025-02-20 14:16:43,329 ] 16 root - INFO - Model pulled successfully!
+[ 2025-02-20 14:16:43,329 ] 31 root - INFO - PdfExtraction object created successfully
+[ 2025-02-20 14:16:43,329 ] 22 root - INFO - Extracting text from pdf
+[ 2025-02-20 14:16:43,329 ] 37 root - ERROR - PDF extraction error: No extractable text found in the PDF.
