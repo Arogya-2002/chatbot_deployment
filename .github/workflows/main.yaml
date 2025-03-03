@@ -93,7 +93,9 @@ jobs:
 
       - name: Start Ollama Service
         run: |
-          nohup ollama serve &
+          nohup ollama serve & \
+          sudo lsof -i :11434
+
 
       # - name: Check Ollama status
       #   run: |
