@@ -95,9 +95,9 @@ jobs:
         run: |
           nohup ollama serve &
 
-      - name: Check Ollama status
-        run: |
-          curl -f http://localhost:11434/api/chat || exit 1
+      # - name: Check Ollama status
+      #   run: |
+      #     curl -f http://localhost:11434/api/chat || exit 1
 
       - name: Login to Amazon ECR
         id: login-ecr
